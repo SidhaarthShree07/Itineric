@@ -30,7 +30,7 @@ export class TripRepository {
   constructor(private readonly env: Env) {}
 
   async workspace(token?: string): Promise<Workspace> {
-    if (!token) return this.createWorkspace();
+    if (!token) throw new WorkspaceAccessError();
     const tokenHash = await sha256(token);
     const rows = await this.request<Array<{ id: string }>>('planner_workspaces', {
       query: { select: 'id', token_hash: `eq.${tokenHash}`, expires_at: `gt.${new Date().toISOString()}`, limit: '1' },
@@ -143,7 +143,7 @@ export class TripRepository {
     await this.insertOne('trip_chat_messages', { trip_id: tripId, role, message });
   }
 
-  private async createWorkspace(): Promise<Workspace> {
+  async createWorkspace(): Promise<Workspace> {
     const token = createWorkspaceToken();
     const tokenHash = await sha256(token);
     const record = await this.insertOne<{ id: string }>('planner_workspaces', { token_hash: tokenHash });

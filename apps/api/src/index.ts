@@ -153,7 +153,8 @@ app.post('/v1/trips', async (context) => {
   try {
     const request = tripPlanningInputSchema.parse(await context.req.json<unknown>());
     const repository = new TripRepository(context.env);
-    const workspace = await repository.workspace(workspaceToken(context));
+    const token = workspaceToken(context);
+    const workspace = token ? await repository.workspace(token) : await repository.createWorkspace();
     const plan = await planner(context).create(request, `workspace:${workspace.id}`);
     const trip = await repository.createTrip({ workspaceId: workspace.id, request, plan, reason: 'initial' });
     return context.json(tripCreateResultSchema.parse({ trip, workspaceToken: workspace.token }), 201);

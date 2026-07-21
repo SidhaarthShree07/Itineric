@@ -3,9 +3,6 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  // The 233 illustrated WebP frames live at the repository root so they can
-  // remain source assets rather than being pulled into the JavaScript bundle.
-  publicDir: '../../HomePage',
   plugins: [
     react(),
     VitePWA({

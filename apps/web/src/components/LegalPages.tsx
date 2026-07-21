@@ -75,14 +75,17 @@ function PrivacyContent() {
   return <>
     <p className="legal-updated">Last updated: 22 July 2026</p>
     <p>Itineric uses the details you enter, such as destinations, dates, budgets, and preferences, to create and improve your travel plan. We only use these details to operate the planning experience you request.</p>
+    <h3>Saved trip privacy</h3>
+    <p>Saved trips belong to a private browser workspace. They can only be listed or opened when that browser sends its random workspace token; another visitor cannot browse your saved plans. The token stays in your browser storage and is never a personal profile or an IP address.</p>
+    <p>We do not use an IP address as a trip-ownership key because IP addresses can change or be shared. The edge service may use an IP temporarily for first-use rate limiting, but it does not use it to share, identify, or retrieve saved trip plans.</p>
     <h3>What can be processed</h3>
     <p>Trip requests can be sent to the connected planning, search, mapping, and accommodation providers. Results may include links to third-party services. Their handling of data is governed by their own policies.</p>
     <h3>Voice notes</h3>
     <p>The PWA does not upload or store raw microphone audio. Voice recognition is supplied by your browser, and only the text you explicitly approve with Shape fields is sent to the planning service to fill in editable trip details.</p>
     <h3>Your choices</h3>
-    <p>Review details before you submit a plan. Do not include passport numbers, payment card details, medical information, or other sensitive personal information in trip notes. If your deployment includes saved trips, use its configured account or data controls to manage them.</p>
+    <p>Review details before you submit a plan. Do not include passport numbers, payment card details, medical information, or other sensitive personal information in trip notes. Clearing this browser's storage removes its workspace token, so its saved trips cannot be reopened from that browser.</p>
     <h3>Local build note</h3>
-    <p>This interface does not make claims about analytics, advertising, or sale of personal data. Deployment operators should replace this notice with their organization-specific privacy policy before public release.</p>
+    <p>This interface does not make claims about analytics, advertising, or sale of personal data. Deployment operators should review this notice against their own provider settings and legal requirements before public release.</p>
   </>;
 }
 
