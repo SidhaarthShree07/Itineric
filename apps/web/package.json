@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@atlas/contracts": "workspace:*",
-    "@vitejs/plugin-react": "^5.0.2",
+    "@vitejs/plugin-react": "^6.0.3",
     "gsap": "3.13.0",
     "maplibre-gl": "^5.7.0",
     "react": "^19.1.1",
