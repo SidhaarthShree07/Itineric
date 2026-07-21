@@ -1,0 +1,39 @@
+# Required for the scheduled Supabase activity write.
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=replace-me
+
+# Configure any subset. Complex hotel work tries Gemini, then OpenAI, Groq, and OpenRouter.
+# Add comma-separated backup keys only when you want same-provider rotation after
+# an HTTP 429. The primary *_API_KEY is always tried first; other failures still
+# use the next provider in the normal chain. Never put these in a VITE_ variable.
+GEMINI_API_KEY=
+GEMINI_API_KEYS=
+GEMINI_MODEL=gemini-3.1-flash-lite
+OPENAI_API_KEY=
+OPENAI_API_KEYS=
+OPENAI_MODEL=gpt-5.6-luna
+GROQ_API_KEY=
+GROQ_API_KEYS=
+GROQ_MODEL=llama-3.3-70b-versatile
+OPENROUTER_API_KEY=
+OPENROUTER_API_KEYS=
+OPENROUTER_MODEL=meta-llama/llama-3.3-70b-instruct:free
+
+# Optional; used to give Groq/OpenRouter grounded result context when Gemini/OpenAI are unavailable.
+TAVILY_API_KEY=
+
+# Required for grounded itinerary geocoding and walking route-matrix times.
+# Keep this Worker-only; Geoapify's free plan is conserved with a 24-hour KV cache.
+GEOAPIFY_API_KEY=
+
+# Required for structured Google Hotels and Google Flights results through SerpApi.
+# Keep this Worker-only; never expose it as a VITE_ variable.
+SERPAPI_API_KEY=
+
+AI_CAP_HOTEL_COMPARISON=6
+AI_CAP_COMPLEX_PLANNING=3
+AI_CAP_CITY_GUIDE=12
+AI_CAP_ITINERARY_SKELETON=12
+AI_CAP_VOICE_TRIP_INTAKE=20
+AI_CAP_WINDOW_SECONDS=86400
+SUPABASE_HEARTBEAT_TABLE=atlas_heartbeats

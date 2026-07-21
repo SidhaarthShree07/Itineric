@@ -1,0 +1,16 @@
+node_modules
+dist
+.wrangler
+.dev.vars
+.pnpm-store
+.agents/
+skills-lock.json
+.env*
+!.env.example
+coverage
+.DS_Store
+Thumbs.db
+*.pem
+*.key
+*.p12
+*.pfx

@@ -1,0 +1,29 @@
+{
+  "name": "@atlas/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b --pretty false",
+    "test": "vitest run --passWithNoTests",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@atlas/contracts": "workspace:*",
+    "@vitejs/plugin-react": "^5.0.2",
+    "gsap": "3.13.0",
+    "maplibre-gl": "^5.7.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "vite": "^7.1.3",
+    "vite-plugin-pwa": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.11",
+    "@types/react-dom": "^19.1.7",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,21 @@
+name = "project-atlas-api"
+main = "src/index.ts"
+compatibility_date = "2026-07-20"
+workers_dev = true
+
+[triggers]
+# A daily user-database write keeps the Supabase Free project active with a wide safety margin.
+crons = ["17 3 * * *"]
+
+[[kv_namespaces]]
+binding = "HOTEL_COMPARISON_CACHE"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+AI_CAP_HOTEL_COMPARISON = "6"
+AI_CAP_COMPLEX_PLANNING = "3"
+AI_CAP_CITY_GUIDE = "12"
+AI_CAP_ITINERARY_SKELETON = "12"
+AI_CAP_VOICE_TRIP_INTAKE = "20"
+AI_CAP_WINDOW_SECONDS = "86400"
+SUPABASE_HEARTBEAT_TABLE = "atlas_heartbeats"
