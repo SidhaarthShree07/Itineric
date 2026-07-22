@@ -14,6 +14,14 @@ export default defineConfig({
         theme_color: '#0F1B2E',
         background_color: '#F7F1E4',
         display: 'standalone',
+        icons: [
+          {
+            src: '/logo.ico',
+            sizes: 'any',
+            type: 'image/x-icon',
+            purpose: 'any',
+          },
+        ],
       },
       workbox: {
         navigateFallback: '/index.html',

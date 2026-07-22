@@ -148,7 +148,7 @@
 .voice-intake-note textarea:disabled { cursor: wait; opacity: .74; }
 
 .voice-intake-note-footer { align-items: flex-start; gap: 14px; }
-.voice-intake-note-footer > span { color: #7a838d; font-size: .67rem; line-height: 1.45; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+.voice-intake-note-footer > span { color: #7a838d; font-size: .67rem; line-height: 1.45; max-width: 100%; min-width: 0; overflow-x: auto; white-space: nowrap; }
 .voice-intake-note-footer button {
   background: transparent;
   border: 1px solid rgb(51 86 75 / .25);
@@ -196,7 +196,9 @@
 @media (max-width: 600px) {
   .voice-intake { border-radius: 15px; margin-top: 17px; padding: 15px; }
   .voice-intake-heading { align-items: flex-start; flex-direction: column; gap: 8px; }
-  .voice-intake-note-footer { flex-direction: column; }
+  .voice-intake-actions { align-items: center; flex-wrap: wrap; }
+  .voice-intake-note-footer { flex-direction: column; gap: 9px; }
+  .voice-intake-note-footer > span { overflow: visible; overflow-wrap: anywhere; white-space: normal; }
   .voice-intake-note-footer button { width: 100%; }
   .voice-intake-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .voice-intake-fields dd { max-width: 100%; }

@@ -632,7 +632,26 @@
   .console-masthead h1 { font-size: clamp(2.7rem, 13vw, 4.2rem); max-width: 580px; }
   .console-masthead-lead { font-size: .88rem; }
   .console-signal-list span { font-size: .58rem; padding: 9px 10px; white-space: nowrap; }
-  .console-nav { border-radius: 16px; margin-bottom: 18px; position: relative; top: auto; }
+  .console-nav {
+    border-radius: 16px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    margin-bottom: 18px;
+    max-width: 100%;
+    overflow: visible;
+    position: relative;
+    top: auto;
+    width: 100%;
+  }
+
+  .console-nav a,
+  .console-nav button {
+    font-size: .68rem;
+    min-width: 0;
+    padding: 10px 4px;
+    text-align: center;
+    white-space: nowrap;
+  }
   .itineric-console .hotel-panel { border-radius: 19px; padding: 16px; }
   .itineric-console .section-heading { display: grid; }
   .itineric-console .estimate-chip { justify-self: start; }

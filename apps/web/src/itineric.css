@@ -128,6 +128,32 @@ body:has(.itineric-shell)::-webkit-scrollbar {
   transform: translate3d(0, -2px, 0);
 }
 
+.itineric-shell .itineric-nav-install {
+  position: relative;
+}
+
+.itineric-shell .itineric-nav-download-label {
+  display: none;
+}
+
+.itineric-shell .itineric-install-message {
+  background: rgb(14 29 53 / .94);
+  border: 1px solid rgb(255 250 240 / .2);
+  border-radius: 10px;
+  box-shadow: 0 12px 26px rgb(7 14 27 / .28);
+  color: rgb(255 250 240 / .92);
+  font-family: var(--font-sans);
+  font-size: .69rem;
+  line-height: 1.35;
+  margin: 7px 0 0;
+  padding: 8px 10px;
+  position: absolute;
+  right: 0;
+  text-align: left;
+  top: 100%;
+  width: min(250px, calc(100vw - 44px));
+}
+
 .itineric-shell .itineric-hero-copy {
   align-self: center;
   margin: 0 auto;
@@ -589,6 +615,14 @@ body:has(.itineric-shell)::-webkit-scrollbar {
     padding-left: 15px;
   }
 
+  .itineric-shell .itineric-nav-open-label {
+    display: none;
+  }
+
+  .itineric-shell .itineric-nav-download-label {
+    display: inline;
+  }
+
   .itineric-shell .itineric-hero-copy {
     align-self: end;
     padding: 76px 10px clamp(118px, 17svh, 152px);
@@ -639,24 +673,38 @@ body:has(.itineric-shell)::-webkit-scrollbar {
     font-size: 2rem;
   }
 
-  .itineric-shell .itineric-story-card-first {
-    left: 19px;
-    top: 20%;
-  }
-
-  .itineric-shell .itineric-story-card-second {
-    right: 19px;
-    top: 23%;
-  }
-
+  /* Each story uses the same calm, top-centre position on a phone. This keeps
+     the copy clear of the progress rail and avoids the desktop side-to-side
+     choreography feeling off-balance in a narrow viewport. */
+  .itineric-shell .itineric-story-card-first,
+  .itineric-shell .itineric-story-card-second,
   .itineric-shell .itineric-story-card-third {
-    bottom: 17%;
-    left: 19px;
+    bottom: auto;
+    left: 50%;
+    right: auto;
+    top: clamp(82px, 15svh, 116px);
+    translate: -50% 0;
   }
 
-  /* The bottom-centre tracker would crowd the stacked cards on a phone. */
+  /* Keep the route steps visible on phones without competing with the cards. */
   .itineric-shell .itineric-step-tracker {
-    display: none;
+    bottom: auto;
+    display: flex;
+    gap: 3px;
+    inset-inline: 0;
+    justify-content: center;
+    left: auto;
+    right: auto;
+    top: max(15px, env(safe-area-inset-top));
+    translate: 0;
+    width: 100%;
+    white-space: nowrap;
+  }
+
+  .itineric-shell .itineric-step-tracker span {
+    font-size: .5rem;
+    gap: 4px;
+    padding: 5px 7px;
   }
 
   .itineric-shell .itineric-sequence-loader {
