@@ -1,19 +1,18 @@
-import { startTransition, useState, type FormEvent } from 'react';
+import { startTransition, useEffect, useState, type FormEvent } from 'react';
 import type { FlightBookingOptionsResult, FlightSearchInput, FlightSearchResult } from '@atlas/contracts';
 import { getFlightBookingOptions, searchFlights } from '../lib/api';
 
-const initialForm: FlightSearchInput = {
+const initialForm: Omit<FlightSearchInput, 'currency'> = {
   departureId: 'DEL',
   arrivalId: 'CDG',
   outboundDate: '2026-08-14',
   returnDate: '2026-08-17',
   adults: 1,
   children: 0,
-  currency: 'EUR',
 };
 
-export function FlightSearch() {
-  const [form, setForm] = useState<FlightSearchInput>(initialForm);
+export function FlightSearch({ currency }: { currency: string }) {
+  const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState<FlightSearchResult>();
   const [searchContext, setSearchContext] = useState<FlightSearchInput>();
   const [quotes, setQuotes] = useState<Record<string, FlightBookingOptionsResult>>({});
@@ -21,11 +20,18 @@ export function FlightSearch() {
   const [quoteLoading, setQuoteLoading] = useState<string>();
   const [error, setError] = useState<string>();
 
+  useEffect(() => {
+    setResult(undefined);
+    setSearchContext(undefined);
+    setQuotes({});
+    setError(undefined);
+  }, [currency]);
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setIsPending(true); setError(undefined); setQuotes({});
     try {
-      const submittedSearch = { ...form, departureId: form.departureId.toUpperCase(), arrivalId: form.arrivalId.toUpperCase() };
+      const submittedSearch = { ...form, currency, departureId: form.departureId.toUpperCase(), arrivalId: form.arrivalId.toUpperCase() };
       const next = await searchFlights(submittedSearch);
       startTransition(() => { setResult(next); setSearchContext(submittedSearch); });
     } catch (reason) {
@@ -45,7 +51,7 @@ export function FlightSearch() {
   }
 
   return <section className="hotel-panel flight-search-panel" aria-labelledby="flight-search-title">
-    <div className="section-heading"><div><p className="eyebrow">Flight intelligence</p><h2 id="flight-search-title">Compare flight options</h2></div></div>
+    <div className="section-heading"><div><p className="eyebrow">Flight intelligence</p><h2 id="flight-search-title">Compare flight options</h2><p className="section-description">Fares will be requested in {currency}.</p></div></div>
     <form className="hotel-form flight-form" onSubmit={onSubmit}>
       <label>From (IATA)<input value={form.departureId} maxLength={3} onChange={(event) => setForm({ ...form, departureId: event.target.value.toUpperCase() })} required /></label>
       <label>To (IATA)<input value={form.arrivalId} maxLength={3} onChange={(event) => setForm({ ...form, arrivalId: event.target.value.toUpperCase() })} required /></label>

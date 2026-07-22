@@ -46,7 +46,7 @@ function greetingFor(trip: TripRecord): ChatMessage {
   };
 }
 
-export function TripPlanner({ onTripChange }: { onTripChange?: (trip: TripRecord) => void }) {
+export function TripPlanner({ onTripChange, onCurrencyChange }: { onTripChange?: (trip: TripRecord) => void; onCurrencyChange?: (currency: string) => void }) {
   const [input, setInput] = useState<TripPlanningInput>(initialInput);
   const [trip, setTrip] = useState<TripRecord>();
   const [savedTrips, setSavedTrips] = useState<Array<Omit<TripRecord, 'plan'>>>([]);
@@ -54,6 +54,10 @@ export function TripPlanner({ onTripChange }: { onTripChange?: (trip: TripRecord
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [message, setMessage] = useState<string>();
   const [isWorking, setIsWorking] = useState(false);
+
+  useEffect(() => {
+    onCurrencyChange?.(input.currency);
+  }, [input.currency, onCurrencyChange]);
 
   const adoptTrip = useCallback((next: TripRecord, options?: { fresh?: boolean }) => {
     setTrip((current) => {

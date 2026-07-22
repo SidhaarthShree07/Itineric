@@ -1,32 +1,37 @@
-import { startTransition, useState, type FormEvent } from 'react';
+import { startTransition, useEffect, useState, type FormEvent } from 'react';
 import type { HotelComparisonInput, HotelComparisonResult } from '@atlas/contracts';
 import { compareHotels, hotelImageProxyUrl } from '../lib/api';
 
-const initialForm: HotelComparisonInput = {
-  destination: 'Paris, France', checkIn: '2026-08-14', checkOut: '2026-08-17', adults: 2, rooms: 1, children: 0, maxPricePerNight: 220, currency: 'EUR',
+const initialForm: Omit<HotelComparisonInput, 'currency'> = {
+  destination: 'Paris, France', checkIn: '2026-08-14', checkOut: '2026-08-17', adults: 2, rooms: 1, children: 0, maxPricePerNight: 220,
 };
 
-export function HotelComparison() {
-  const [form, setForm] = useState<HotelComparisonInput>(initialForm);
+export function HotelComparison({ currency }: { currency: string }) {
+  const [form, setForm] = useState(initialForm);
   const [result, setResult] = useState<HotelComparisonResult>();
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState<string>();
 
+  useEffect(() => {
+    setResult(undefined);
+    setError(undefined);
+  }, [currency]);
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setIsPending(true); setError(undefined);
-    try { const nextResult = await compareHotels(form); startTransition(() => setResult(nextResult)); }
+    try { const nextResult = await compareHotels({ ...form, currency }); startTransition(() => setResult(nextResult)); }
     catch (reason) { setError(reason instanceof Error ? reason.message : 'Unable to compare hotels.'); }
     finally { setIsPending(false); }
   }
 
   return <section className="hotel-panel hotel-comparison-panel" aria-labelledby="hotel-comparison-title">
-    <div className="section-heading"><div><p className="eyebrow">Stay intelligence</p><h2 id="hotel-comparison-title">Compare hotel prices</h2></div></div>
+    <div className="section-heading"><div><p className="eyebrow">Stay intelligence</p><h2 id="hotel-comparison-title">Compare hotel prices</h2><p className="section-description">Prices will be requested in {currency}.</p></div></div>
     <form className="hotel-form" onSubmit={onSubmit}>
       <label>Destination<input value={form.destination} onChange={(event) => setForm({ ...form, destination: event.target.value })} required /></label>
       <label>Check-in<input type="date" value={form.checkIn} onChange={(event) => setForm({ ...form, checkIn: event.target.value })} required /></label>
       <label>Check-out<input type="date" value={form.checkOut} onChange={(event) => setForm({ ...form, checkOut: event.target.value })} required /></label>
       <label>Guests<input type="number" min="1" max="12" value={form.adults} onChange={(event) => setForm({ ...form, adults: Number(event.target.value) })} required /></label>
-      <label>Nightly cap ({form.currency})<input type="number" min="1" value={form.maxPricePerNight} onChange={(event) => setForm({ ...form, maxPricePerNight: Number(event.target.value) })} required /></label>
+      <label>Nightly cap ({currency})<input type="number" min="1" value={form.maxPricePerNight} onChange={(event) => setForm({ ...form, maxPricePerNight: Number(event.target.value) })} required /></label>
       <button type="submit" disabled={isPending}>{isPending ? 'Checking inventory…' : 'Compare stays'}</button>
     </form>
     {error ? <p className="error-message" role="alert">{error}</p> : null}

@@ -11,6 +11,7 @@ const TripMap = lazy(() => import('./components/TripMap').then((module) => ({ de
 
 export function App() {
   const [activeTrip, setActiveTrip] = useState<TripRecord>();
+  const [planCurrency, setPlanCurrency] = useState('EUR');
   const [legalPanel, setLegalPanel] = useState<LegalPanelId | null>(null);
   const scrollToWorkspace = useCallback(() => document.getElementById('atlas-workspace')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), []);
 
@@ -21,7 +22,7 @@ export function App() {
         <ConsoleChrome onOpenLegal={setLegalPanel} />
         <section className="workspace console-layout" aria-label="Trip planning workspace">
           <div className="workspace-main console-stack">
-            <section id="trip-plan" aria-label="Trip plan"><TripPlanner onTripChange={setActiveTrip} /></section>
+            <section id="trip-plan" aria-label="Trip plan"><TripPlanner onTripChange={setActiveTrip} onCurrencyChange={setPlanCurrency} /></section>
           </div>
           <aside id="route-map" className="console-map-rail" aria-label="Route map">
             <Suspense fallback={<section className="map-panel map-loading">Loading map...</section>}>
@@ -36,8 +37,8 @@ export function App() {
           </aside>
         </section>
         <section className="console-tools" aria-label="Travel research tools">
-          <section id="stay-search" aria-label="Hotel comparison"><HotelComparison /></section>
-          <section id="flight-search" aria-label="Flight comparison"><FlightSearch /></section>
+          <section id="stay-search" aria-label="Hotel comparison"><HotelComparison currency={planCurrency} /></section>
+          <section id="flight-search" aria-label="Flight comparison"><FlightSearch currency={planCurrency} /></section>
         </section>
         <ConsoleFooter onOpenLegal={setLegalPanel} />
       </div>
